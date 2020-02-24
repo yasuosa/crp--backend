@@ -1,0 +1,84 @@
+#服务器端口
+server:
+  port: 3001
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  messages:
+    encoding: UTF-8
+  thymeleaf:
+    cache: false
+    enabled: true
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+#数据库
+  datasource:
+    password: 123456
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.101.138.164:3310/erp?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC
+    druid:
+      min-idle: 2
+      max-active: 20
+      max-idle: 5
+      initial-size: 1
+      filters: stat,log4j,wall
+      validation-query: select 1
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
+        url-pattern: "/druid/*"
+        deny:
+        allow:
+      max-wait: 5000
+  http:
+    encoding:
+      charset: utf-8
+#redis
+  redis:
+    port: 6379
+    host: 47.101.138.164
+    jedis:
+      pool:
+        max-active: 10000
+        max-idle: 25
+        min-idle: 10
+
+#mps
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+    banner: true
+  mapper-locations:
+    - classpath:mapper/**/*Mapper.xml
+#shiro配置  静态资源文件要放行
+shiro:
+  hash-iterations: 2
+  login-url: /index.html
+  anon-urls:
+    - /**
+  logout-url: /login/logout*
+  authc-ulrs:
+#    - /**
+  hash-algorithm-name: "md5"
+
+fdfs:
+  so-timeout: 2500       # 读取时间
+  connect-timeout: 600   # 连接超时时间
+  thumb-image:           # 缩略图
+    width: 100
+    height: 100
+  tracker-list:          # tracker服务配置地址列表
+  - 47.101.138.164:22122
+upload:
+  base-url: http://47.101.138.164/
+  allow-types:
+  - image/jpeg
+  - image/png
+  - image/bmp
+  - image/gif
