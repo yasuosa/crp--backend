@@ -3,11 +3,13 @@ package com.rpy.system.config;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @Auther 任鹏宇
  * @Date 2020/2/24
  */
+@Configuration
 public class MyBatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {

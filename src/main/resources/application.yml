@@ -12,6 +12,7 @@ spring:
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+
 #数据库
   datasource:
     password: 123456
@@ -45,6 +46,8 @@ spring:
         max-active: 10000
         max-idle: 25
         min-idle: 10
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
 
 #mps
 mybatis-plus:

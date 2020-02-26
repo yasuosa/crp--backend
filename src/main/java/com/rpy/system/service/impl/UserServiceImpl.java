@@ -11,7 +11,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rpy.system.domain.User;
 import com.rpy.system.mapper.UserMapper;
 import com.rpy.system.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{
 
     private Log log= LogFactory.getLog(UserServiceImpl.class.getSimpleName());

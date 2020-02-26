@@ -28,7 +28,6 @@ import java.util.function.Consumer;
 
 @RequestMapping("index")
 @RestController
-@CrossOrigin
 public class IndexController {
 
 

@@ -12,7 +12,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rpy.system.domain.Menu;
 import com.rpy.system.mapper.MenuMapper;
 import com.rpy.system.service.MenuService;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService{
 
 
