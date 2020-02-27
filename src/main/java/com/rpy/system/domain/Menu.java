@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 
+import com.rpy.system.common.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.util.bcel.Const;
 
 @Data
 @AllArgsConstructor
@@ -80,6 +82,12 @@ permission:menu:addMenu
     @TableField(value = "available")
     private Integer available;
 
+    @TableField(exist = false)
+    private Boolean open;
+
+    public Boolean getOpen() {
+        return getSpread()== Constant.SPREAD_TRUE?true:false;
+    }
 
     /**
      * 构造权限的

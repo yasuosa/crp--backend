@@ -2,6 +2,8 @@ package com.rpy.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rpy.system.common.Constant;
+import com.rpy.system.common.DataGirdView;
+import com.rpy.system.vo.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -50,5 +52,37 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         });
         qw.orderByAsc("ordernum");
         return menuMapper.selectList(qw);
+    }
+
+
+    @Override
+    public Menu updateMenu(Menu menu) {
+        menuMapper.updateById(menu);
+        return menu;
+    }
+
+    @Override
+    public Integer queryMenuChildrenCountById(Integer id) {
+        return menuMapper.queryMenuChildrenCountById(id);
+    }
+
+    @Override
+    public Integer queryMenuMaxOrderNum() {
+        return this.menuMapper.queryMenuMaxOrderNum();
+    }
+
+    @Override
+    public Menu saveMenu(Menu menu) {
+        menuMapper.insert(menu);
+        return menu;
+    }
+
+    @Override
+    public DataGirdView queryAllMenu(MenuVo menuVo) {
+        QueryWrapper<Menu> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq(menuVo.getAvailable()!=null,"available",menuVo.getAvailable());
+        queryWrapper.orderByAsc("ordernum");
+        List<Menu> menus = menuMapper.selectList(queryWrapper);
+        return new DataGirdView(Long.valueOf(menus.size()),menus);
     }
 }

@@ -17,12 +17,16 @@ public class DataGirdView {
 
     private String msg="";
 
-    private Long count;
+    private Long count=0L;
 
     private Object data;
 
     public DataGirdView(Long count, Object data) {
         this.count = count;
+        this.data = data;
+    }
+
+    public DataGirdView(Object data) {
         this.data = data;
     }
 }

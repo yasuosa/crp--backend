@@ -29,7 +29,7 @@ public class Constant {
      * 是否展开
      */
     public static final Integer SPREAD_TRUE =1 ;
-    public static final Integer SPREAD_FALSE =1 ;
+    public static final Integer SPREAD_FALSE =0 ;
 
     /**
      * 菜单顶部
