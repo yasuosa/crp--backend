@@ -1,0 +1,38 @@
+package com.rpy.system.domain;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+@Data
+@TableName(value = "sys_notice")
+public class Notice implements Serializable {
+     @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
+    @TableField(value = "title")
+    private String title;
+
+    @TableField(value = "content")
+    private String content;
+
+    @TableField(value = "createtime")
+    private Date createtime;
+
+    @TableField(value = "opername")
+    private String opername;
+
+    private static final long serialVersionUID = 1L;
+
+    public static final String COL_TITLE = "title";
+
+    public static final String COL_CONTENT = "content";
+
+    public static final String COL_CREATETIME = "createtime";
+
+    public static final String COL_OPERNAME = "opername";
+}
