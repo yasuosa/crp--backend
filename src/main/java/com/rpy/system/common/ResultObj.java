@@ -23,6 +23,11 @@ public class ResultObj {
     public static final ResultObj UPDATE_SUCCESS = new ResultObj(200,"修改成功") ;
     public static final ResultObj UPDATE_FAIL = new ResultObj(-1,"修改失败") ;
     public static final ResultObj UPDATE_WRONG = new ResultObj(-1,"修改失败|未指定目标");
+
+    public static final ResultObj DISPATCH_SUCCESS = new ResultObj(200,"分配成功") ;
+    public static final ResultObj DISPATCH_FAIL = new ResultObj(-1,"分配失败") ;
+    public static final ResultObj RESET_SUCCESS = new ResultObj(200,"重置密码成功") ;
+    public static final ResultObj RESET_FAIL = new ResultObj(-1,"重置密码失败") ;
     private Integer code=200;
     private String msg=null;
     private String token=null;

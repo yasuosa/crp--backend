@@ -35,4 +35,8 @@ public class Constant {
      * 菜单顶部
      */
     public static final Integer TOP = 0;
+    public static final String DEFALUT_PWD ="123456" ;
+
+    //头像地址
+    public static final String DEFAULT_TITLE_IMAGE = "";
 }

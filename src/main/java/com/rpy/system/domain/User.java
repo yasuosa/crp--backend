@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
@@ -53,6 +54,7 @@ public class User implements Serializable {
      * 密码
      */
     @TableField(value = "pwd")
+    @JsonIgnore
     private String pwd;
 
     /**
@@ -60,6 +62,9 @@ public class User implements Serializable {
      */
     @TableField(value = "deptid")
     private Integer deptid;
+
+    @TableField(exist = false)
+    private String deptName;
 
     /**
      * 入职时间
@@ -87,6 +92,7 @@ public class User implements Serializable {
      * 盐
      */
     @TableField(value = "salt")
+    @JsonIgnore
     private String salt;
 
     /**
