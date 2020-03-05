@@ -3,6 +3,7 @@ package com.rpy.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rpy.system.common.Constant;
 import com.rpy.system.common.DataGirdView;
 import com.rpy.system.vo.RoleVo;
 import org.apache.commons.lang3.StringUtils;
@@ -10,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rpy.system.domain.Role;
 import com.rpy.system.mapper.RoleMapper;
 import com.rpy.system.service.RoleService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService{
 
 
@@ -72,6 +76,25 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             }
         }
         return new DataGirdView(roles);
+    }
+
+    @Override
+    public List<String> queryRoleNamesByUserId(Integer id) {
+        //根据userid查询rid
+        List<Integer> rids=roleMapper.queryRoleIdByUid(id);
+        if(null ==rids ||rids.size()==0){
+            return new ArrayList<>();
+        }
+        //根据rid查询名字
+        QueryWrapper<Role> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("available", Constant.AVAILABLE_TRUE);
+        queryWrapper.in("id",rids);
+        List<Role> roles=roleMapper.selectList(queryWrapper);
+        List<String> names=new ArrayList<>();
+        for (Role role : roles) {
+            names.add(role.getName());
+        }
+        return names;
     }
 
     @Override

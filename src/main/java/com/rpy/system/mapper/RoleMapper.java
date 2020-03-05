@@ -23,4 +23,6 @@ public interface RoleMapper extends BaseMapper<Role> {
     List<Integer> queryRoleIdByUid(Integer userid);
 
     void saveUserRole(@Param("uid") Integer uid, @Param("rids") Integer[] rids);
+
+    List<Integer> queryMenuIdsByRoleIds(@Param("rids") List<Integer> rids);
 }

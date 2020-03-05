@@ -39,4 +39,7 @@ public class Constant {
 
     //头像地址
     public static final String DEFAULT_TITLE_IMAGE = "";
+
+    //redis前缀
+    public static final String SHIOR_USER_STUFF ="shiro:session:" ;
 }

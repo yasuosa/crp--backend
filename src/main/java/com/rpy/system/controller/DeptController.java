@@ -6,6 +6,7 @@ import com.rpy.system.common.ResultObj;
 import com.rpy.system.domain.Dept;
 import com.rpy.system.service.DeptService;
 import com.rpy.system.vo.DeptVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,7 @@ public class DeptController {
     }
 
 
+    @RequiresPermissions("dept:add")
     @RequestMapping(value = "addDept",method = RequestMethod.POST)
     public ResultObj addDept(Dept dept){
         try {
@@ -55,7 +57,7 @@ public class DeptController {
         return new DataGirdView(dept);
     }
 
-
+    @RequiresPermissions("dept:update")
     @RequestMapping(value = "updateDept",method = RequestMethod.POST)
     public ResultObj updateDept(Dept dept){
         if(null == dept || dept.getId()==null){
@@ -76,7 +78,7 @@ public class DeptController {
         return new DataGirdView(count);
     }
 
-
+    @RequiresPermissions("dept:delete")
     @RequestMapping(value = "delDept",method = RequestMethod.POST)
     public ResultObj delDept(Integer id){
         if(null == id){

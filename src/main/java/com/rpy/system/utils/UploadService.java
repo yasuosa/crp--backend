@@ -2,14 +2,13 @@ package com.rpy.system.utils;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.rpy.system.config.UploadProperties;
+import com.rpy.system.common.upload.UploadProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -52,7 +51,7 @@ public class UploadService {
             // 3.2、上传
             StorePath storePath = storageClient.uploadFile(file.getInputStream(), file.getSize(), extension, null);
             // 返回路径
-            return prop.getBaseUrl() + storePath.getFullPath();
+            return  storePath.getFullPath();
         } catch (IOException e) {
             log.error("【文件上传】上传文件失败！....{}", e);
             throw  new RuntimeException("【文件上传】上传文件失败！"+e.getMessage());

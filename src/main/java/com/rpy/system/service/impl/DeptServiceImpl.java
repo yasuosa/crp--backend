@@ -16,7 +16,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rpy.system.mapper.DeptMapper;
 import com.rpy.system.domain.Dept;
 import com.rpy.system.service.DeptService;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService{
 
     @Autowired

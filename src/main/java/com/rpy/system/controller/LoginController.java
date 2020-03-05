@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Auther 任鹏宇
@@ -51,7 +53,12 @@ public class LoginController {
             loginfo.setLoginip(request.getLocalAddr());
             loginfo.setLogintime(new Date());
             loginfoService.save(loginfo);
-            return new ResultObj(200,"登陆成功",token);
+            Map<String,Object> map=new HashMap<>();
+            map.put("token",token);
+            map.put("permissions",activeUser.getPermissions());
+            map.put("type",user.getType());
+            map.put("username",user.getName());
+            return new ResultObj(200,"登陆成功",map);
         }catch (AuthenticationException e){
             e.printStackTrace();
             return new ResultObj(-1,"登陆或密码不正确");

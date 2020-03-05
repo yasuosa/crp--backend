@@ -49,4 +49,12 @@
             (#{rid} ,#{uid} )
         </foreach>
     </insert>
+    <select id="queryMenuIdsByRoleIds" resultType="java.lang.Integer">
+        select distinct  mid from  sys_role_menu
+        <where>
+            <foreach collection="rids" open="rid in(" close=")" separator="," item="rid">
+                #{rid}
+            </foreach>
+        </where>
+    </select>
 </mapper>

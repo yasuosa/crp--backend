@@ -3,7 +3,7 @@ package com.rpy.system.common;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.omg.CORBA.INTERNAL;
+
 
 /**
  * @Auther 任鹏宇

@@ -1,17 +1,23 @@
 package com.rpy.system.controller;
 
+import com.rpy.system.common.ActiveUser;
 import com.rpy.system.common.Constant;
 import com.rpy.system.common.DataGirdView;
 import com.rpy.system.common.ResultObj;
 import com.rpy.system.domain.User;
 import com.rpy.system.service.UserService;
 import com.rpy.system.utils.MD5Utils;
+import com.rpy.system.utils.SessionDataUtils;
 import com.rpy.system.vo.UserVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
 
 
     @RequestMapping(value = "loadAllUser" , method = RequestMethod.GET)
@@ -55,11 +64,22 @@ public class UserController {
 
     @RequestMapping(value = "updateUser",method = RequestMethod.POST)
     public ResultObj updateUser(User user){
+
         if(null == user || user.getId()==null){
             return ResultObj.UPDATE_WRONG;
         }
         try {
             userService.updateUser(user);
+            //TODO  redis里面的用户信息修改
+//            Integer id = user.getId();
+//            ActiveUser activeUser = SessionDataUtils.getActiveUser();
+//            if(activeUser.getUser().getId().equals(id)){
+//                Serializable token = SecurityUtils.getSubject().getSession().getId();
+//                ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
+//                user=userService.getById(id);
+//                activeUser.setUser(user);
+//                opsForValue.set(Constant.SHIOR_USER_STUFF+token,activeUser);
+//            }
             return ResultObj.UPDATE_SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,4 +146,13 @@ public class UserController {
         }
     }
 
+
+    /**
+     * 得到当前用户信息
+     */
+    @RequestMapping(value = "getCurrentUser",method = RequestMethod.GET)
+    public DataGirdView getCurrentUser(){
+        ActiveUser activeUser= (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+        return new DataGirdView(activeUser.getUser());
+    }
 }

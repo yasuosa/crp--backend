@@ -58,13 +58,15 @@ mybatis-plus:
       id-type: auto
     banner: true
   mapper-locations:
-    - classpath:mapper/**/*Mapper.xml
+    - classpath*:mapper/**/*Mapper.xml
 #shiro配置  静态资源文件要放行
 shiro:
   hash-iterations: 2
   login-url: /index.html
   anon-urls:
     - /**
+#    - /login/doLogin
+#    - /login/checkLogin
   logout-url: /login/logout*
   authc-ulrs:
 #    - /**

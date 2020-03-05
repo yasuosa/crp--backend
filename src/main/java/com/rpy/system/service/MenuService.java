@@ -32,4 +32,7 @@ public interface MenuService extends IService<Menu>{
     Menu saveMenu(Menu menu);
 
     DataGirdView queryAllMenu(MenuVo menuVo);
+
+    List<String> queryPermissionCodeByUserId(Integer id);
+
 }

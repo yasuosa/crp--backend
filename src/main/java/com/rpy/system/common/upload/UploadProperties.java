@@ -1,4 +1,4 @@
-package com.rpy.system.config;
+package com.rpy.system.common.upload;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

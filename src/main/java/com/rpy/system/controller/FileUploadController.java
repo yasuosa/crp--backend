@@ -2,6 +2,8 @@ package com.rpy.system.controller;
 
 import com.rpy.system.common.DataGirdView;
 import com.rpy.system.common.UploadImgResult;
+import com.rpy.system.service.UserService;
+import com.rpy.system.utils.SessionDataUtils;
 import com.rpy.system.utils.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,9 @@ public class FileUploadController {
     @Autowired
     private UploadService uploadService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "uploadImgs",method = RequestMethod.POST)
     public UploadImgResult uploadImgs(MultipartFile[] mfs){
         try {
@@ -37,4 +42,6 @@ public class FileUploadController {
             return new UploadImgResult(-1,"上传失败|"+e.getMessage(),null);
         }
     }
+
+
 }

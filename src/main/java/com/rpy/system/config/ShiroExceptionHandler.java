@@ -15,14 +15,15 @@ import javax.servlet.http.HttpServletResponse;
  * @Date 2020/2/26
  * 身份认证异常 统一处理
  */
-
-@RestControllerAdvice
-public class ShiroExceptionHandler extends ResponseEntityExceptionHandler {
-
-    @ExceptionHandler({AuthenticationException.class})
-    public AuthErrorException runtimeExceptionHandler(HttpServletRequest request, final Exception e, HttpServletResponse response) {
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
-        RuntimeException exception = (RuntimeException) e;
-        return new AuthErrorException(400, exception.getMessage());
-    }
-}
+//
+//
+//@RestControllerAdvice
+//public class ShiroExceptionHandler extends ResponseEntityExceptionHandler {
+//
+//    @ExceptionHandler({AuthenticationException.class})
+//    public AuthErrorException runtimeExceptionHandler(HttpServletRequest request, final Exception e, HttpServletResponse response) {
+//        response.setStatus(HttpStatus.BAD_REQUEST.value());
+//        RuntimeException exception = (RuntimeException) e;
+//        return new AuthErrorException(400, exception.getMessage());
+//    }
+//}

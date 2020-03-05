@@ -30,7 +30,7 @@ public class ResultObj {
     public static final ResultObj RESET_FAIL = new ResultObj(-1,"重置密码失败") ;
     private Integer code=200;
     private String msg=null;
-    private String token=null;
+    private Object token=null;
 
     public ResultObj(Integer code, String msg) {
         this.code = code;
