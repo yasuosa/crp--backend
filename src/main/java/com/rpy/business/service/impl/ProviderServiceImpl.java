@@ -1,5 +1,8 @@
 package com.rpy.business.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.bean.copier.ValueProvider;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 
 @Service
@@ -62,8 +66,11 @@ public class ProviderServiceImpl extends ServiceImpl<ProviderMapper, Provider> i
     @CachePut(cacheNames = "com.rpy.business.service.impl.ProviderServiceImpl",key="#result.id")
     @Override
     public Provider updateProvider(Provider provider) {
-        super.updateById(provider);
-        return provider;
+        Provider selectById = providerMapper.selectById(provider.getId());
+        BeanUtil.copyProperties(provider,selectById, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+        super.updateById(selectById);
+
+        return selectById;
     }
 
     @CachePut(cacheNames = "com.rpy.business.service.impl.ProviderServiceImpl",key="#id")

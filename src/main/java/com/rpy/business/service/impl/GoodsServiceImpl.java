@@ -1,5 +1,7 @@
 package com.rpy.business.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -68,8 +70,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Override
     @CachePut(cacheNames = "com.rpy.business.service.impl.GoodsServiceImpl",key = "#result.id")
     public Goods updateGoods(Goods goods) {
-        updateById(goods);
-        return goods;
+        Goods selectById = goodsMapper.selectById(goods.getId());
+        BeanUtil.copyProperties(goods,selectById, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+        updateById(selectById);
+        return selectById;
     }
 
     @Override

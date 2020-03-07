@@ -98,7 +98,7 @@ public class GoodsController {
      * @return
      */
     @RequestMapping(value = "batchDelGoods", method = RequestMethod.POST)
-    public ResultObj addGoods(Integer[] ids){
+    public ResultObj batchDelGoods(Integer[] ids){
         if(null == ids || ids.length<=1){
             return ResultObj.DELETE_WRONG;
         }
@@ -133,6 +133,13 @@ public class GoodsController {
     public Object getGoodsByProviderId(Integer providerid){
         List<Goods> goods=goodsService.queryGoodsByProviderId(providerid);
         return new DataGirdView(goods);
+    }
+
+    @RequestMapping(value = "getGoodsByGoodId",method = RequestMethod.GET)
+    public Object getGoodsByGoodId(Integer goodsid){
+        Goods goods = goodsService.getById(goodsid);
+        return new DataGirdView(goods);
+
     }
 
 }

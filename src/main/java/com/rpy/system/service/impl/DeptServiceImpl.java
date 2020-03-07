@@ -1,5 +1,7 @@
 package com.rpy.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rpy.system.common.DataGirdView;
 import com.rpy.system.vo.DeptVo;
@@ -70,8 +72,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @CachePut(cacheNames = "com.rpy.system.service.impl.DeptServiceImpl",key = "#result.id")
     public Dept updateDept(Dept dept) {
         try {
-            deptMapper.updateById(dept);
-            return dept;
+            Dept selectById = deptMapper.selectById(dept.getId());
+            BeanUtil.copyProperties(dept,selectById, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+
+            deptMapper.updateById(selectById);
+            return selectById;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

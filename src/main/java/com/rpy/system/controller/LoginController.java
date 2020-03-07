@@ -1,5 +1,9 @@
 package com.rpy.system.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.captcha.ShearCaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
 import com.rpy.system.common.ActiveUser;
 import com.rpy.system.common.ResultObj;
 import com.rpy.system.domain.Loginfo;
@@ -13,11 +17,17 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.IOException;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +43,24 @@ public class LoginController {
     @Autowired
     private LoginfoService loginfoService;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
 
     /**
      * 用户登陆
      */
     @RequestMapping(value = "doLogin",method = RequestMethod.POST)
-    public ResultObj doLogin(String loginname, String password, HttpServletRequest request){
+    public ResultObj doLogin(String loginname, String password,String keyCode,String captcha, HttpServletRequest request){
         try {
+            ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+            String code = opsForValue.get(keyCode);
+            if(null ==code ){
+                return new ResultObj(-1,"验证码过期");
+            }
+            if(!captcha.equals(code)){
+                return new ResultObj(-1,"验证码错误");
+            }
             Subject subject = SecurityUtils.getSubject();
             AuthenticationToken loginToken=new UsernamePasswordToken(loginname,password);
             subject.login(loginToken);
@@ -69,6 +90,14 @@ public class LoginController {
     /**
      * 返回验证码
      */
+    @RequestMapping(value = "captcha",method =RequestMethod.GET)
+    public void getCode(String keyCode, HttpServletResponse response) throws IOException {
+        ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(100, 30, 4, 4);
+        captcha.write(response.getOutputStream());
+        String code = captcha.getCode();
+        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+        opsForValue.set(keyCode,code, Duration.ofMinutes(1));
+    }
 
     /**
      * 判断当前token是否登陆

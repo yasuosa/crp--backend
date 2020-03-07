@@ -58,7 +58,7 @@ public class ProviderController {
      * @return
      */
     @RequestMapping(value = "delProvider", method = RequestMethod.POST)
-    public ResultObj addProvider(Integer id){
+    public ResultObj delProvider(Integer id){
         try {
             if(null == id){
                 return ResultObj.DELETE_WRONG;
@@ -96,7 +96,7 @@ public class ProviderController {
      * @return
      */
     @RequestMapping(value = "batchDelProvider", method = RequestMethod.POST)
-    public ResultObj addProvider(Integer[] ids){
+    public ResultObj batchDelProvider(Integer[] ids){
         if(null == ids || ids.length<=1){
             return ResultObj.DELETE_WRONG;
         }

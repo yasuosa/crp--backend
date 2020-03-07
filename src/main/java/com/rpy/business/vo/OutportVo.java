@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InportVo extends BaseVo {
+public class OutportVo extends BaseVo {
 
     private Integer providerid;
 

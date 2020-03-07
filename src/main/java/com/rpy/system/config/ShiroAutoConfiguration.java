@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 
+import com.rpy.system.flitter.ShiroLoginFilter;
 import com.rpy.system.realm.UserRealm;
 import com.rpy.system.shiro.OptionsAccessControllerFilter;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
@@ -114,23 +115,22 @@ public class ShiroAutoConfiguration {
 		if (anonUrls != null && anonUrls.length > 0) {
 			for (String anon : anonUrls) {
 				filterChainDefinitionMap.put(anon, "anon");
-				//filterChainDefinitionMap.put(anon, "options");
 			}
 		}
 		// 设置登出的路径
 		if (null != logOutUrl) {
 			filterChainDefinitionMap.put(logOutUrl, "logout");
-			//filterChainDefinitionMap.put(logOutUrl, "options");
 		}
 		// 设置拦截的路径
 		if (authcUlrs != null && authcUlrs.length > 0) {
 			for (String authc : authcUlrs) {
 				filterChainDefinitionMap.put(authc, "authc");
+				//如果没有此类 建议不要加入 否则创建不来
 //				filterChainDefinitionMap.put(authc, "options");
 			}
 		}
 		Map<String, Filter> filters=new HashMap<>();
-//		filters.put("authc", new OptionsAccessControllerFilter());
+		filters.put("authc", new ShiroLoginFilter());
 		//配置过滤器
 		factoryBean.setFilters(filters);
 		factoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

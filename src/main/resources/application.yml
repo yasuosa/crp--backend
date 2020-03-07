@@ -28,8 +28,8 @@ spring:
       validation-query: select 1
       stat-view-servlet:
         enabled: true
-        login-username: admin
-        login-password: admin
+#        login-username: admin
+#        login-password: admin
         url-pattern: "/druid/*"
         deny:
         allow:
@@ -64,12 +64,17 @@ shiro:
   hash-iterations: 2
   login-url: /index.html
   anon-urls:
-    - /**
-#    - /login/doLogin
-#    - /login/checkLogin
+    - /login.html*
+    - /login/doLogin*
+    - /druid/**
+    - /doc.html
+    - /webjars/**
+    - /swagger-resources/**
+    - /v2/**
+    - /login/captcha
   logout-url: /login/logout*
   authc-ulrs:
-#    - /**
+    - /**
   hash-algorithm-name: "md5"
 
 fdfs:
@@ -87,3 +92,11 @@ upload:
   - image/png
   - image/bmp
   - image/gif
+#个人swagger相关配置
+swagger:
+  description: 仓库管理后台接口管理系统
+  username: 任鹏宇
+  phone: 18255990660
+  email: 601529188@qq.com
+  license: 仓库管理后台接口管理系统
+  version: 1.0

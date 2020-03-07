@@ -61,7 +61,7 @@ public class InportController {
      * @return
      */
     @RequestMapping(value = "delInport", method = RequestMethod.POST)
-    public ResultObj addInport(Integer id){
+    public ResultObj delInport(Integer id){
         try {
             if(null == id){
                 return ResultObj.DELETE_WRONG;
@@ -99,7 +99,7 @@ public class InportController {
      * @return
      */
     @RequestMapping(value = "batchDelInport", method = RequestMethod.POST)
-    public ResultObj addInport(Integer[] ids){
+    public ResultObj batchDelInport(Integer[] ids){
         if(null == ids || ids.length<=1){
             return ResultObj.DELETE_WRONG;
         }

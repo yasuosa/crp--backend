@@ -17,9 +17,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InportVo extends BaseVo {
+public class SalesVo extends BaseVo {
 
-    private Integer providerid;
+    private Integer customerid;
 
     private Integer goodsid;
     private Date startTime;
